@@ -18,6 +18,7 @@ def home():
 def get_students():
     return jsonify(students)
 
+# to add data you have to use postman app which offer to interact with api method 
 @app.route('/students', methods=['POST'])
 def add_student():
     new_student=request.get_json()
@@ -30,17 +31,17 @@ def update_studetn(id):
         if s['id']==id:
             s.update(request.get_json())
             return jsonify({"message":"DATA changed","data":s})
-        else:
-            return jsonify({"error":"student not found"}),404
         
-@app.route('/student/<int:id>',methods=['DELETE'])
+    return jsonify({"error":"student not found"}),404
+        
+@app.route('/students/<int:id>',methods=['DELETE'])
 def delete_students(id):
     for s in students:
         if s['id']==id:
             students.remove(s)
             return jsonify({"messege":"student data deleted","data":s})
-        else:
-            return jsonify({"error":"student data not found"}),404
+        
+    return jsonify({"error":"student data not found"}),404
 
 
 if __name__=='__main__':
